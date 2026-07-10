@@ -1,31 +1,60 @@
 # 🚀 PixelNest Studio
 
-Building modern, high-converting websites for startups, founders and local businesses.
+Building modern, fast, and high-converting websites for startups, founders, and local businesses.
 
-## 💼 What We Do
+---
 
-✅ Landing Pages
-✅ Business Websites
-✅ Portfolio Websites
-✅ React Development
-✅ Website Redesign
-✅ Performance Optimization
+## 💼 Services
 
-## ⚡ Why PixelNest Studio?
+- 🚀 Landing Pages
+- 💻 Business Websites
+- 🏢 Portfolio Websites
+- ⚛️ React Web Development
+- 🎨 Website Redesign
+- 📱 Responsive Web Design
+- 🔧 Bug Fixes & Improvements
 
-• Fast Delivery
-• Mobile Responsive Design
-• Clean & Modern UI
-• SEO-Friendly Websites
-• Affordable Pricing
-• Ongoing Support
+---
 
 ## 🛠 Tech Stack
 
-HTML • CSS3 • JavaScript • React • Tailwind CSS • Python • Git • GitHub • Responsive Web Design
+- HTML5
+- CSS3
+- JavaScript (ES6+)
+- React.js
+- Tailwind CSS
+- Python
+- Git
+- GitHub
 
-## 📬 Let's Work Together
+---
 
-📧 pixelneststudio.work@gmail.com
+## ⭐ Why Choose PixelNest Studio?
 
-> Helping businesses build a stronger online presence.
+- Clean & Modern UI
+- Mobile-Friendly Websites
+- Fast Performance
+- SEO-Friendly Development
+- Affordable Solutions
+- On-Time Delivery
+
+---
+
+## 📂 Featured Projects
+
+- Real Estate Landing Page
+- Modern Gym Website
+- Restaurant Website
+- Personal Portfolio Website
+
+More projects coming soon...
+
+---
+
+## 📧 Contact
+
+**Email:** pixelneststudio.work@gmail.com
+
+---
+
+> **Turning ideas into beautiful, high-performing digital experiences.**
