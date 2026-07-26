@@ -1,0 +1,194 @@
+@import "tailwindcss";
+
+/* ================================================
+   PixelNest Design Tokens
+   Formalizes the existing dark/violet visual language
+   already in use across Navbar, Hero, and App.jsx —
+   no visual change, just named, reusable values.
+================================================ */
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Inter", ui-sans-serif, system-ui, sans-serif;
+
+  /* ---- Color: Surface (dark base, matches html/body today) ---- */
+  --color-surface-base: #09090b;
+  --color-surface-raised: #0f0f12;
+  --color-surface-overlay: #17171b;
+  --color-surface-border: #232327;
+
+  /* ---- Color: Text ---- */
+  --color-text-primary: #fafafa;
+  --color-text-secondary: #a1a1aa;
+  --color-text-muted: #71717a;
+
+  /* ---- Color: Brand / Accent (matches existing violet-fuchsia-cyan gradient) ---- */
+  --color-accent-violet: #7c3aed;
+  --color-accent-violet-hover: #8b5cf6;
+  --color-accent-fuchsia: #d946ef;
+  --color-accent-cyan: #22d3ee;
+
+  /* ---- Color: Semantic (matches Contact.jsx form states) ---- */
+  --color-success: #22c55e;
+  --color-warning: #f59e0b;
+  --color-danger: #ef4444;
+
+  /* ---- Radius ---- */
+  --radius-xs: 6px;
+  --radius-sm: 10px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+  --radius-pill: 999px;
+
+  /* ---- Shadow (soft, premium — avoids heavy default box-shadows) ---- */
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.35);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.45);
+  --shadow-glow-violet: 0 0 40px rgba(124, 58, 237, 0.35);
+  --shadow-glow-cyan: 0 0 40px rgba(34, 211, 238, 0.25);
+
+  /* ---- Spacing (section rhythm — supplements Tailwind's default scale) ---- */
+  --spacing-section-y: 8rem;
+  --spacing-section-y-sm: 5rem;
+  --spacing-container-x: 1.5rem;
+
+  /* ---- Container widths ---- */
+  --container-content: 1200px;
+  --container-narrow: 800px;
+  --container-wide: 1440px;
+}
+
+/* ------------------------------
+   Global
+-------------------------------- */
+
+html {
+  scroll-behavior: smooth;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  background: #09090b;
+  color: #fafafa;
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ------------------------------
+   Selection
+-------------------------------- */
+
+::selection {
+  background: #7c3aed;
+  color: #ffffff;
+}
+
+/* ------------------------------
+   Scrollbar
+-------------------------------- */
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #09090b;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #7c3aed;
+  border-radius: 999px;
+  transition: background 0.3s;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #8b5cf6;
+}
+
+/* ------------------------------
+   Accessibility
+-------------------------------- */
+
+*:focus-visible {
+  outline: 2px solid #8b5cf6;
+  outline-offset: 3px;
+}
+
+/* ------------------------------
+   Remove Click Effects
+-------------------------------- */
+
+/* Remove mobile tap highlight */
+* {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+/* Remove active state background flash on buttons and links */
+button:active,
+a:active,
+[role="button"]:active {
+  background-image: none !important;
+  -webkit-tap-highlight-color: transparent !important;
+  outline: none !important;
+}
+
+/* Remove default click effects */
+button:focus:not(:focus-visible),
+a:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* ------------------------------
+   Images
+-------------------------------- */
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+/* ------------------------------
+   Links
+-------------------------------- */
+
+a {
+  text-decoration: none;
+}
+
+/* ------------------------------
+   Buttons
+-------------------------------- */
+
+button {
+  cursor: pointer;
+}
+
+/* ------------------------------
+   Marquee Animation
+-------------------------------- */
+
+@keyframes ticker {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-ticker {
+  animation: ticker 40s linear infinite;
+  will-change: transform;
+}
+
+.animate-ticker:hover {
+  animation-play-state: paused;
+}
