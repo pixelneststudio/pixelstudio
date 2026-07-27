@@ -63,12 +63,13 @@ PixelNest Studio is a modern digital agency focused on building high-performance
 
 ## 📂 Featured Projects
 
-- 🏢 Modern Business Website
-- 💪 Premium Gym Website
-- ☕ Restaurant & Café Website
-- 🏠 Real Estate Landing Page
-- 💼 Personal Portfolio Website
-- 🤖 AI Business Automation Demo
+- 🏋️ IronPulse Gym
+- ☕ Brew & Bite Cafe
+- ☁️ Nova Cloud
+- 🏥 EliteCare Clinic
+- 🏡 Horizon Realty
+- ⚖️ LexPro Law
+
 
 > More premium projects coming soon...
 
