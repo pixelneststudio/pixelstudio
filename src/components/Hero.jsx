@@ -152,7 +152,7 @@ function Hero() {
               initial={{ y: "100%" }}
               animate={{ y: 0 }}
               transition={{ duration: 0.8, ease: EASE.standard }}
-              className="select-none text-5xl font-black uppercase leading-[0.92] tracking-tighter text-[var(--color-text-primary)] md:text-[5.5rem] lg:text-[6rem]"
+              className="select-none text-3xl font-black uppercase leading-[0.92] tracking-tighter text-[var(--color-text-primary)] sm:text-4xl md:text-[5.5rem] lg:text-[6rem]"
             >
               PREMIUM WEBSITES.
               <br />

@@ -105,7 +105,7 @@ function Loader({ loading }) {
               transition={{
                 delay: 0.45,
               }}
-              className="mt-5 text-[11px] uppercase tracking-[0.55em] text-zinc-500"
+              className="mt-5 px-4 text-center text-[10px] uppercase tracking-[0.35em] text-zinc-500 sm:px-0 sm:text-[11px] sm:tracking-[0.55em]"
             >
               Crafting Premium Digital Experiences
             </motion.p>

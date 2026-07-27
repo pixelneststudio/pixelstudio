@@ -36,8 +36,6 @@ const TECH_STACK_LIST = [
 ];
 
 function Footer() {
-  const year = new Date().getFullYear();
-
   const handleBackToTop = (event) => {
     event.preventDefault();
     const prefersReducedMotion = window.matchMedia(
@@ -187,7 +185,7 @@ function Footer() {
               </a>
 
               <a
-                href="https://github.com/pixelneststudio"
+                href="https://github.com/pixelneststudio/pixelstudio"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group flex items-center gap-3 text-sm text-[var(--color-text-secondary)] transition-colors duration-300 hover:text-[var(--color-accent-violet-hover)]"
