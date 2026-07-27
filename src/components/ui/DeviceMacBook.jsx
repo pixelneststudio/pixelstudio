@@ -38,12 +38,9 @@ function DeviceMacBook({ children, className = "" }) {
       rotateY.current += (targetRotateY.current - rotateY.current) * 0.1;
       
       if (containerRef.current) {
-        containerRef.current.style.transform = `
-          perspective(1000px)
-          rotateX(${rotateX.current}deg)
-          rotateY(${rotateY.current}deg)
-          translateY(${prefersReducedMotion ? 0 : -8}px)
-        `;
+        // Use CSS custom properties instead of overwriting transform
+        containerRef.current.style.setProperty('--rotate-x', `${rotateX.current}deg`);
+        containerRef.current.style.setProperty('--rotate-y', `${rotateY.current}deg`);
       }
       
       rafId.current = requestAnimationFrame(animate);
@@ -64,23 +61,42 @@ function DeviceMacBook({ children, className = "" }) {
       className={`relative ${className}`}
       style={{
         transform: prefersReducedMotion ? "none" : "perspective(1000px)",
+        '--rotate-x': '0deg',
+        '--rotate-y': '0deg',
         transition: prefersReducedMotion ? "none" : "transform 0.1s ease-out",
       }}
     >
       {/* MacBook Pro Frame */}
-      <div className="relative mx-auto" style={{ width: "100%", maxWidth: "800px" }}>
+      <div 
+        className="relative mx-auto"
+        style={{ 
+          width: "100%", 
+          maxWidth: "800px",
+          transform: prefersReducedMotion ? "none" : `rotateX(var(--rotate-x)) rotateY(var(--rotate-y)) translateY(-8px)`,
+          transition: prefersReducedMotion ? "none" : "transform 0.1s ease-out",
+        }}
+      >
         {/* Screen */}
-        <div className="relative bg-zinc-900 rounded-t-2xl border-4 border-zinc-800 border-b-0 overflow-hidden"
+        <div className="relative bg-zinc-900 rounded-t-2xl border-4 border-zinc-800 border-b-0"
              style={{ 
                aspectRatio: "16/10",
                boxShadow: "0 0 60px rgba(124, 58, 237, 0.15), inset 0 0 100px rgba(0, 0, 0, 0.5)"
              }}>
-          {/* Screen Content */}
-          <div className="w-full h-full overflow-hidden">
+          {/* Screen Content - Relative positioned for proper scroll context */}
+          <div 
+            className="relative w-full h-full overflow-y-auto"
+            style={{ 
+              WebkitOverflowScrolling: 'touch',
+              touchAction: 'pan-y'
+            }}
+          >
             {children}
           </div>
           
-          {/* Screen Reflection */}
+          {/* Top Camera */}
+          <div className="absolute top-3 left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-zinc-700 pointer-events-none" />
+          
+          {/* Screen Reflection - placed after content to not interfere */}
           <div 
             className="absolute inset-0 pointer-events-none"
             style={{
@@ -88,9 +104,6 @@ function DeviceMacBook({ children, className = "" }) {
               opacity: 0.5
             }}
           />
-          
-          {/* Top Camera */}
-          <div className="absolute top-3 left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-zinc-700" />
         </div>
         
         {/* Base/Keyboard */}

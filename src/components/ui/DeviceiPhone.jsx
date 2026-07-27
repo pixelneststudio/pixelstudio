@@ -38,12 +38,9 @@ function DeviceiPhone({ children, className = "" }) {
       rotateY.current += (targetRotateY.current - rotateY.current) * 0.1;
       
       if (containerRef.current) {
-        containerRef.current.style.transform = `
-          perspective(1000px)
-          rotateX(${rotateX.current}deg)
-          rotateY(${rotateY.current}deg)
-          translateY(${prefersReducedMotion ? 0 : 8}px)
-        `;
+        // Use CSS custom properties instead of overwriting transform
+        containerRef.current.style.setProperty('--rotate-x', `${rotateX.current}deg`);
+        containerRef.current.style.setProperty('--rotate-y', `${rotateY.current}deg`);
       }
       
       rafId.current = requestAnimationFrame(animate);
@@ -64,29 +61,44 @@ function DeviceiPhone({ children, className = "" }) {
       className={`relative ${className}`}
       style={{
         transform: prefersReducedMotion ? "none" : "perspective(1000px)",
+        '--rotate-x': '0deg',
+        '--rotate-y': '0deg',
         transition: prefersReducedMotion ? "none" : "transform 0.1s ease-out",
       }}
     >
       {/* iPhone 16 Pro Frame */}
-      <div className="relative mx-auto" style={{ width: "100%", maxWidth: "280px" }}>
+      <div 
+        className="relative mx-auto"
+        style={{ 
+          width: "100%",
+          transform: prefersReducedMotion ? "none" : `rotateX(var(--rotate-x)) rotateY(var(--rotate-y)) translateY(8px)`,
+          transition: prefersReducedMotion ? "none" : "transform 0.1s ease-out",
+        }}
+      >
         {/* Device Body */}
         <div className="relative bg-zinc-900 rounded-[3rem] border-4 border-zinc-700 overflow-hidden"
              style={{ 
                aspectRatio: "9/19.5",
                boxShadow: "0 25px 50px rgba(0, 0, 0, 0.5), 0 0 40px rgba(124, 58, 237, 0.1), inset 0 0 60px rgba(0, 0, 0, 0.3)"
              }}>
-          {/* Screen Content */}
-          <div className="w-full h-full overflow-hidden rounded-[2.5rem]">
+          {/* Screen Content - Relative positioned for proper scroll context */}
+          <div 
+            className="relative w-full h-full overflow-y-auto rounded-[2.5rem]"
+            style={{ 
+              WebkitOverflowScrolling: 'touch',
+              touchAction: 'pan-y'
+            }}
+          >
             {children}
           </div>
           
           {/* Dynamic Island */}
-          <div className="absolute top-4 left-1/2 -translate-x-1/2 w-28 h-8 bg-black rounded-full z-20"
+          <div className="absolute top-4 left-1/2 -translate-x-1/2 w-28 h-8 bg-black rounded-full z-20 pointer-events-none"
                style={{ boxShadow: "0 0 20px rgba(0, 0, 0, 0.5)" }}>
             <div className="absolute right-2 top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-zinc-800" />
           </div>
           
-          {/* Screen Reflection */}
+          {/* Screen Reflection - placed after content to not interfere */}
           <div 
             className="absolute inset-0 pointer-events-none z-10 rounded-[2.5rem]"
             style={{
@@ -96,12 +108,12 @@ function DeviceiPhone({ children, className = "" }) {
           />
           
           {/* Side Buttons */}
-          <div className="absolute left-0 top-24 w-1 h-12 bg-zinc-700 rounded-l" />
-          <div className="absolute left-0 top-40 w-1 h-8 bg-zinc-700 rounded-l" />
-          <div className="absolute right-0 top-28 w-1 h-16 bg-zinc-700 rounded-r" />
+          <div className="absolute left-0 top-24 w-1 h-12 bg-zinc-700 rounded-l pointer-events-none" />
+          <div className="absolute left-0 top-40 w-1 h-8 bg-zinc-700 rounded-l pointer-events-none" />
+          <div className="absolute right-0 top-28 w-1 h-16 bg-zinc-700 rounded-r pointer-events-none" />
           
           {/* Bottom Home Indicator */}
-          <div className="absolute bottom-2 left-1/2 -translate-x-1/2 w-32 h-1 bg-white/20 rounded-full z-20" />
+          <div className="absolute bottom-2 left-1/2 -translate-x-1/2 w-32 h-1 bg-white/20 rounded-full z-20 pointer-events-none" />
         </div>
       </div>
     </div>

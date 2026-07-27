@@ -1,5 +1,5 @@
 import { motion, useMotionValue, useTransform, useSpring, useReducedMotion } from "framer-motion";
-import { Play, ArrowUpRight } from "lucide-react";
+import { Play, ArrowUpRight, HeartPulse, Scale, Building, Cloud, Coffee, Dumbbell } from "lucide-react";
 import { fadeUp, staggerContainer, VIEWPORT_ONCE } from "../lib/motion";
 import { memo } from "react";
 import DeviceMacBook from "./ui/DeviceMacBook";
@@ -82,37 +82,52 @@ const ACCENT_STYLES = {
     border: "group-hover:border-orange-500/50",
     glow: "shadow-orange-500/20",
     gradient: "from-orange-500/20 to-transparent",
+    text: "text-orange-500",
   },
   amber: {
     bar: "bg-amber-500",
     border: "group-hover:border-amber-500/50",
     glow: "shadow-amber-500/20",
     gradient: "from-amber-500/20 to-transparent",
+    text: "text-amber-500",
   },
   cyan: {
     bar: "bg-[var(--color-accent-cyan)]",
     border: "group-hover:border-[var(--color-accent-cyan)]/50",
     glow: "shadow-[var(--color-accent-cyan)]/20",
     gradient: "from-[var(--color-accent-cyan)]/20 to-transparent",
+    text: "text-[var(--color-accent-cyan)]",
   },
   emerald: {
     bar: "bg-emerald-500",
     border: "group-hover:border-emerald-500/50",
     glow: "shadow-emerald-500/20",
     gradient: "from-emerald-500/20 to-transparent",
+    text: "text-emerald-500",
   },
   blue: {
     bar: "bg-blue-500",
     border: "group-hover:border-blue-500/50",
     glow: "shadow-blue-500/20",
     gradient: "from-blue-500/20 to-transparent",
+    text: "text-blue-500",
   },
   purple: {
     bar: "bg-purple-500",
     border: "group-hover:border-purple-500/50",
     glow: "shadow-purple-500/20",
     gradient: "from-purple-500/20 to-transparent",
+    text: "text-purple-500",
   },
+};
+
+const CATEGORY_ICONS = {
+  "Fitness": Dumbbell,
+  "Restaurant": Coffee,
+  "Technology": Cloud,
+  "Healthcare": HeartPulse,
+  "Real Estate": Building,
+  "Legal": Scale,
 };
 
 const PARTICLES_CONFIG = [
@@ -124,22 +139,31 @@ const PARTICLES_CONFIG = [
   { id: 5, width: 3.0, height: 3.0, left: 60, top: 15, duration: 4.0, delay: 1.7 },
 ];
 
-const ProjectDeviceShowcase = memo(function ProjectDeviceShowcase({ accent }) {
+const MOBILE_PARTICLES_CONFIG = [
+  { id: 0, width: 2.5, height: 3.0, left: 10, top: 15, duration: 3.5, delay: 0.1 },
+  { id: 1, width: 2.0, height: 2.0, left: 80, top: 25, duration: 4.0, delay: 0.6 },
+  { id: 2, width: 3.5, height: 2.5, left: 30, top: 75, duration: 3.0, delay: 1.2 },
+  { id: 3, width: 1.8, height: 3.5, left: 70, top: 85, duration: 4.2, delay: 0.4 },
+  { id: 4, width: 3.0, height: 1.8, left: 20, top: 55, duration: 3.2, delay: 0.9 },
+];
+
+const MobileProjectHeader = memo(function MobileProjectHeader({ category, accent }) {
   const style = ACCENT_STYLES[accent];
+  const IconComponent = CATEGORY_ICONS[category];
   const prefersReducedMotion = useReducedMotion();
 
-  const particles = PARTICLES_CONFIG;
-
   return (
-    <div className="relative h-full min-h-[400px] flex items-center justify-center">
+    <div className="relative h-[160px] flex items-center justify-center md:hidden">
       {/* Background Effects */}
       <div className="absolute inset-0 overflow-hidden">
-        {/* Radial gradients */}
-        <div className={`absolute top-1/4 left-1/4 w-96 h-96 rounded-full bg-gradient-to-br ${style.gradient} opacity-20 blur-3xl`} />
-        <div className={`absolute bottom-1/4 right-1/4 w-96 h-96 rounded-full bg-gradient-to-tl ${style.gradient} opacity-10 blur-3xl`} />
+        {/* Main gradient background */}
+        <div className={`absolute inset-0 bg-gradient-to-br ${style.gradient} opacity-30`} />
+        
+        {/* Radial glow */}
+        <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 rounded-full bg-gradient-to-br ${style.gradient} opacity-40 blur-2xl`} />
         
         {/* Floating particles */}
-        {particles.map((particle) => (
+        {MOBILE_PARTICLES_CONFIG.map((particle) => (
           <motion.div
             key={particle.id}
             className="absolute rounded-full bg-white/5"
@@ -153,7 +177,7 @@ const ProjectDeviceShowcase = memo(function ProjectDeviceShowcase({ accent }) {
               prefersReducedMotion
                 ? {}
                 : {
-                    y: [0, -20, 0],
+                    y: [0, -15, 0],
                     opacity: [0.3, 0.6, 0.3],
                   }
             }
@@ -166,81 +190,183 @@ const ProjectDeviceShowcase = memo(function ProjectDeviceShowcase({ accent }) {
         ))}
       </div>
 
-      {/* Device Layout */}
-      <div className="relative z-10 flex flex-col lg:flex-row items-center justify-center gap-8 lg:gap-12 w-full">
-        {/* MacBook */}
+      {/* Icon Container */}
+      <div className="relative z-10">
+        {/* Animated accent ring */}
         <motion.div
-          initial={{ opacity: 0, y: 30, scale: 0.95 }}
-          whileInView={{ opacity: 1, y: 0, scale: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-          className="w-full lg:w-auto"
-        >
-          <DeviceMacBook className="scale-90 lg:scale-100">
-            <div className="w-full h-full bg-gradient-to-br from-zinc-900 to-zinc-950 p-6">
-              {/* Screen Content */}
-              <div className={`absolute inset-0 bg-gradient-to-br ${style.gradient} opacity-30`} />
-              <div className="relative h-full flex flex-col">
-                {/* Browser Chrome */}
-                <div className="flex items-center gap-2 mb-4">
-                  <span className="h-2 w-2 rounded-full bg-red-500/80" />
-                  <span className="h-2 w-2 rounded-full bg-yellow-500/80" />
-                  <span className="h-2 w-2 rounded-full bg-green-500/80" />
-                  <div className="flex-1 h-6 rounded-full bg-zinc-800/50" />
-                </div>
-                
-                {/* Content Skeleton */}
-                <div className="flex-1 space-y-3">
-                  <div className={`h-3 w-1/3 rounded-full ${style.bar} animate-pulse`} />
-                  <div className="h-2 w-full rounded-full bg-zinc-700/50" />
-                  <div className="h-2 w-2/3 rounded-full bg-zinc-700/50" />
-                  <div className="mt-4 grid grid-cols-3 gap-3">
-                    {[...Array(3)].map((_, i) => (
-                      <div key={i} className="h-20 rounded-lg bg-zinc-800/50" />
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </DeviceMacBook>
-        </motion.div>
-
-        {/* iPhone */}
+          animate={
+            prefersReducedMotion
+              ? {}
+              : {
+                  scale: [1, 1.1, 1],
+                  opacity: [0.5, 0.8, 0.5],
+                }
+          }
+          transition={{
+            duration: 3,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+          className={`absolute inset-0 rounded-full bg-gradient-to-br ${style.gradient} blur-xl`}
+        />
+        
+        {/* Icon with gradient background */}
         <motion.div
-          initial={{ opacity: 0, y: 30, scale: 0.95 }}
-          whileInView={{ opacity: 1, y: 0, scale: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-          className="w-full lg:w-auto lg:-ml-16"
+          initial={{ scale: 0.8, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+          className="relative flex items-center justify-center w-24 h-24 rounded-full bg-gradient-to-br from-zinc-800/80 to-zinc-900/80 backdrop-blur-xl border border-zinc-700/50 shadow-2xl"
         >
-          <DeviceiPhone className="scale-75 lg:scale-90">
-            <div className="w-full h-full bg-gradient-to-br from-zinc-900 to-zinc-950 p-4">
-              {/* Mobile Content */}
-              <div className={`absolute inset-0 bg-gradient-to-br ${style.gradient} opacity-30`} />
-              <div className="relative h-full flex flex-col">
-                {/* Header */}
-                <div className="flex items-center justify-between mb-4">
-                  <div className={`h-2 w-8 rounded-full ${style.bar} animate-pulse`} />
-                  <div className="h-2 w-2 rounded-full bg-zinc-700/50" />
-                </div>
-                
-                {/* Content */}
-                <div className="flex-1 space-y-3">
-                  <div className="h-16 rounded-lg bg-zinc-800/50" />
-                  <div className="h-2 w-full rounded-full bg-zinc-700/50" />
-                  <div className="h-2 w-2/3 rounded-full bg-zinc-700/50" />
-                  <div className="mt-4 space-y-2">
-                    {[...Array(3)].map((_, i) => (
-                      <div key={i} className="h-12 rounded-lg bg-zinc-800/50" />
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </DeviceiPhone>
+          <motion.div
+            animate={
+              prefersReducedMotion
+                ? {}
+                : {
+                    y: [0, -5, 0],
+                  }
+            }
+            transition={{
+              duration: 4,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+          >
+            {IconComponent && (
+              <IconComponent 
+                size={48} 
+                className={`${style.text} drop-shadow-lg`}
+              />
+            )}
+          </motion.div>
         </motion.div>
       </div>
     </div>
+  );
+});
+
+const ProjectDeviceShowcase = memo(function ProjectDeviceShowcase({ accent, category }) {
+  const style = ACCENT_STYLES[accent];
+  const prefersReducedMotion = useReducedMotion();
+
+  const particles = PARTICLES_CONFIG;
+
+  return (
+    <>
+      {/* Mobile Header - Only visible on mobile */}
+      <MobileProjectHeader category={category} accent={accent} />
+      
+      {/* Desktop/Tablet Device Showcase - Hidden on mobile */}
+      <div className="relative hidden md:block h-[220px] sm:h-[280px] md:h-[350px] lg:h-[400px] flex items-center justify-center">
+        {/* Background Effects */}
+        <div className="absolute inset-0 overflow-hidden">
+          {/* Radial gradients */}
+          <div className={`absolute top-1/4 left-1/4 w-96 h-96 rounded-full bg-gradient-to-br ${style.gradient} opacity-20 blur-3xl`} />
+          <div className={`absolute bottom-1/4 right-1/4 w-96 h-96 rounded-full bg-gradient-to-tl ${style.gradient} opacity-10 blur-3xl`} />
+          
+          {/* Floating particles */}
+          {particles.map((particle) => (
+            <motion.div
+              key={particle.id}
+              className="absolute rounded-full bg-white/5"
+              style={{
+                width: particle.width,
+                height: particle.height,
+                left: `${particle.left}%`,
+                top: `${particle.top}%`,
+              }}
+              animate={
+                prefersReducedMotion
+                  ? {}
+                  : {
+                      y: [0, -20, 0],
+                      opacity: [0.3, 0.6, 0.3],
+                    }
+              }
+              transition={{
+                duration: particle.duration,
+                repeat: Infinity,
+                delay: particle.delay,
+              }}
+            />
+          ))}
+        </div>
+
+        {/* Device Layout */}
+        <div className="relative z-10 flex flex-col lg:flex-row items-center justify-center gap-6 lg:gap-12 w-full px-4">
+          {/* MacBook */}
+          <motion.div
+            initial={{ opacity: 0, y: 30, scale: 0.95 }}
+            whileInView={{ opacity: 1, y: 0, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+            className="w-full lg:w-auto flex justify-center"
+          >
+            <DeviceMacBook className="w-full max-w-[280px] sm:max-w-[400px] md:max-w-[550px] lg:max-w-[700px]">
+              <div className="w-full h-full bg-gradient-to-br from-zinc-900 to-zinc-950 p-6">
+                {/* Screen Content */}
+                <div className={`absolute inset-0 bg-gradient-to-br ${style.gradient} opacity-30`} />
+                <div className="relative h-full flex flex-col">
+                  {/* Browser Chrome */}
+                  <div className="flex items-center gap-2 mb-4">
+                    <span className="h-2 w-2 rounded-full bg-red-500/80" />
+                    <span className="h-2 w-2 rounded-full bg-yellow-500/80" />
+                    <span className="h-2 w-2 rounded-full bg-green-500/80" />
+                    <div className="flex-1 h-6 rounded-full bg-zinc-800/50" />
+                  </div>
+
+                  {/* Content Skeleton */}
+                  <div className="flex-1 space-y-3">
+                    <div className={`h-3 w-1/3 rounded-full ${style.bar} animate-pulse`} />
+                    <div className="h-2 w-full rounded-full bg-zinc-700/50" />
+                    <div className="h-2 w-2/3 rounded-full bg-zinc-700/50" />
+                    <div className="mt-4 grid grid-cols-3 gap-3">
+                      {[...Array(3)].map((_, i) => (
+                        <div key={i} className="h-20 rounded-lg bg-zinc-800/50" />
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </DeviceMacBook>
+          </motion.div>
+
+          {/* iPhone - Hidden on mobile, visible on tablet and desktop */}
+          <motion.div
+            initial={{ opacity: 0, y: 30, scale: 0.95 }}
+            whileInView={{ opacity: 1, y: 0, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+            className="hidden md:flex lg:w-auto lg:-ml-16 justify-center"
+          >
+            <DeviceiPhone className="w-full max-w-[180px] md:max-w-[200px] lg:max-w-[250px]">
+              <div className="w-full h-full bg-gradient-to-br from-zinc-900 to-zinc-950 p-4">
+                {/* Mobile Content */}
+                <div className={`absolute inset-0 bg-gradient-to-br ${style.gradient} opacity-30`} />
+                <div className="relative h-full flex flex-col">
+                  {/* Header */}
+                  <div className="flex items-center justify-between mb-4">
+                    <div className={`h-2 w-8 rounded-full ${style.bar} animate-pulse`} />
+                    <div className="h-2 w-2 rounded-full bg-zinc-700/50" />
+                  </div>
+
+                  {/* Content */}
+                  <div className="flex-1 space-y-3">
+                    <div className="h-16 rounded-lg bg-zinc-800/50" />
+                    <div className="h-2 w-full rounded-full bg-zinc-700/50" />
+                    <div className="h-2 w-2/3 rounded-full bg-zinc-700/50" />
+                    <div className="mt-4 space-y-2">
+                      {[...Array(3)].map((_, i) => (
+                        <div key={i} className="h-12 rounded-lg bg-zinc-800/50" />
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </DeviceiPhone>
+          </motion.div>
+        </div>
+      </div>
+    </>
   );
 });
 
@@ -302,21 +428,21 @@ const ProjectCard = memo(function ProjectCard({ project, onOpenDemo }) {
         </motion.div>
 
         {/* Device Showcase */}
-        <div className="mb-6">
-          <ProjectDeviceShowcase accent={project.accent} slug={project.slug} />
+        <div className="mb-4 sm:mb-6">
+          <ProjectDeviceShowcase accent={project.accent} category={project.category} />
         </div>
 
         {/* Content */}
         <div className="flex flex-1 flex-col">
-          <h3 className="text-3xl font-black tracking-tight text-[var(--color-text-primary)] transition-colors duration-300 group-hover:text-[var(--color-accent-violet-hover)]">
+          <h3 className="text-2xl sm:text-3xl font-black tracking-tight text-[var(--color-text-primary)] transition-colors duration-300 group-hover:text-[var(--color-accent-violet-hover)]">
             {project.title}
           </h3>
 
-          <p className="mt-4 text-sm font-medium leading-relaxed text-[var(--color-text-secondary)]">
+          <p className="mt-3 sm:mt-4 text-xs sm:text-sm font-medium leading-relaxed text-[var(--color-text-secondary)]">
             {project.challenge}
           </p>
 
-          <p className="mt-3 flex-1 text-sm leading-relaxed text-[var(--color-text-muted)]">
+          <p className="mt-2 sm:mt-3 flex-1 text-xs sm:text-sm leading-relaxed text-[var(--color-text-muted)]">
             {project.outcome}
           </p>
 
