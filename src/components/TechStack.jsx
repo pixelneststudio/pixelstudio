@@ -1,101 +1,99 @@
 import { motion } from "framer-motion";
+import { memo } from "react";
 import {
-  FaReact,
-  FaNodeJs,
-  FaJsSquare,
-  FaPython,
-  FaRobot,
-} from "react-icons/fa";
-import {
-  SiTailwindcss,
-  SiFramer,
-  SiNextdotjs,
-  SiTypescript,
-  SiN8N,
-  SiSupabase,
-} from "react-icons/si";
+  Atom,
+  Server,
+  Cpu,
+  Bot,
+  Workflow,
+  Database,
+  Layers,
+  Code2,
+  FileCode,
+  Terminal,
+} from "lucide-react";
 
 const TECHS = [
   {
     name: "React 19",
-    icon: FaReact,
+    icon: Atom,
     level: "Modern Frontend",
     color: "text-cyan-400",
     glow: "from-cyan-400/20 to-blue-500/20",
   },
   {
     name: "Next.js",
-    icon: SiNextdotjs,
+    icon: Layers,
     level: "Full-Stack Framework",
     color: "text-white",
     glow: "from-white/20 to-gray-500/20",
   },
   {
     name: "Tailwind CSS",
-    icon: SiTailwindcss,
+    icon: Code2,
     level: "Design System",
     color: "text-sky-400",
     glow: "from-cyan-400/20 to-sky-500/20",
   },
   {
     name: "TypeScript",
-    icon: SiTypescript,
+    icon: FileCode,
     level: "Type-Safe Development",
     color: "text-blue-400",
     glow: "from-blue-400/20 to-blue-600/20",
   },
   {
     name: "JavaScript",
-    icon: FaJsSquare,
+    icon: Terminal,
     level: "Application Logic",
     color: "text-yellow-400",
     glow: "from-yellow-400/20 to-orange-500/20",
   },
   {
     name: "Node.js",
-    icon: FaNodeJs,
+    icon: Server,
     level: "Backend APIs",
     color: "text-green-400",
     glow: "from-green-400/20 to-emerald-500/20",
   },
   {
     name: "Python",
-    icon: FaPython,
+    icon: Cpu,
     level: "AI & Automation",
     color: "text-yellow-300",
     glow: "from-yellow-300/20 to-blue-400/20",
   },
   {
     name: "Framer Motion",
-    icon: SiFramer,
+    icon: Workflow,
     level: "Premium Motion",
     color: "text-violet-400",
     glow: "from-violet-400/20 to-fuchsia-500/20",
   },
   {
     name: "OpenAI API",
-    icon: FaRobot,
+    icon: Bot,
     level: "AI Agents",
     color: "text-emerald-400",
     glow: "from-emerald-400/20 to-green-500/20",
   },
   {
     name: "n8n Automation",
-    icon: SiN8N,
+    icon: Workflow,
     level: "Workflow Automation",
     color: "text-red-400",
     glow: "from-red-400/20 to-orange-500/20",
   },
   {
     name: "Supabase",
-    icon: SiSupabase,
+    icon: Database,
     level: "Backend & Database",
     color: "text-green-300",
     glow: "from-green-300/20 to-emerald-400/20",
   },
 ];
 
-function TechCard({ tech, index }) {
+const TechCard = memo(function TechCard({ tech, index }) {
   const Icon = tech.icon;
 
   return (
@@ -144,9 +142,9 @@ function TechCard({ tech, index }) {
       </div>
     </motion.div>
   );
-}
+});
 
-function TechStack() {
+const TechStack = memo(function TechStack() {
   return (
     <section
       id="tech"
@@ -194,6 +192,6 @@ function TechStack() {
       </div>
     </section>
   );
-}
+});
 
 export default TechStack;

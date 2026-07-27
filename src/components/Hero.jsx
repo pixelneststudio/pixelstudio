@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { useState, useEffect } from "react";
 import { Globe, Sparkles, Zap, ArrowRight, Check } from "lucide-react";
 import { fadeUp, staggerContainer, EASE, VIEWPORT_ONCE } from "../lib/motion";
 import MagneticButton from "./ui/MagneticButton";
@@ -49,7 +50,7 @@ function AIWorkspacePreview() {
       initial="hidden"
       whileInView="visible"
       viewport={VIEWPORT_ONCE}
-      className="relative w-full max-w-md rounded-[var(--radius-xl)] border border-[var(--color-surface-border)] bg-[var(--color-surface-raised)]/80 p-1.5 shadow-[var(--shadow-lg)] backdrop-blur-xl"
+      className="relative w-full max-w-md rounded-[var(--radius-xl)] border border-[var(--color-surface-border)] bg-[var(--color-surface-raised)]/80 p-1.5 shadow-[var(--shadow-lg)] backdrop-blur-md"
     >
       {/* Ambient glow behind the panel */}
       <div className="pointer-events-none absolute -inset-6 -z-10 rounded-[var(--radius-xl)] bg-[var(--color-accent-violet)]/10 blur-3xl" />
@@ -127,19 +128,30 @@ function AIWorkspacePreview() {
 }
 
 function Hero() {
+  const [shouldAnimate, setShouldAnimate] = useState(false);
+
+  useEffect(() => {
+    // Defer animations until after initial paint
+    const request = requestIdleCallback(() => {
+      setShouldAnimate(true);
+    });
+
+    return () => cancelIdleCallback(request);
+  }, []);
+
   return (
     <section className="relative flex min-h-screen flex-col justify-center overflow-hidden bg-[var(--color-surface-base)] px-6 pb-20 pt-28">
       <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_right,#141416_1px,transparent_1px),linear-gradient(to_bottom,#141416_1px,transparent_1px)] bg-[size:5rem_5rem]" />
 
-      <div className="absolute -right-32 top-1/4 h-96 w-96 rounded-full bg-[var(--color-accent-violet)]/10 blur-[120px]" />
-      <div className="absolute -left-32 bottom-1/4 h-72 w-72 rounded-full bg-[var(--color-accent-cyan)]/5 blur-[100px]" />
+      <div className="absolute -right-32 top-1/4 h-96 w-96 rounded-full bg-[var(--color-accent-violet)]/10 blur-[80px]" />
+      <div className="absolute -left-32 bottom-1/4 h-72 w-72 rounded-full bg-[var(--color-accent-cyan)]/5 blur-[60px]" />
 
       <div className="relative z-10 mx-auto grid w-full max-w-7xl items-center gap-16 lg:grid-cols-[1.3fr_1fr]">
         {/* Left column — Concept A typography, Concept B messaging */}
         <div className="flex flex-col items-start text-left">
           <motion.div
             initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
+            animate={shouldAnimate ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
             transition={{ duration: 0.5 }}
             className="mb-6 flex items-center gap-2 text-xs font-bold uppercase tracking-[0.3em] text-[var(--color-accent-violet)]"
           >
@@ -150,7 +162,7 @@ function Hero() {
           <div className="w-full overflow-hidden">
             <motion.h1
               initial={{ y: "100%" }}
-              animate={{ y: 0 }}
+              animate={shouldAnimate ? { y: 0 } : { y: "100%" }}
               transition={{ duration: 0.8, ease: EASE.standard }}
               className="select-none text-3xl font-black uppercase leading-[0.92] tracking-tighter text-[var(--color-text-primary)] sm:text-4xl md:text-[5.5rem] lg:text-[6rem]"
             >
@@ -166,7 +178,7 @@ function Hero() {
 
           <motion.p
             initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
+            animate={shouldAnimate ? { opacity: 1 } : { opacity: 0 }}
             transition={{ delay: 0.5, duration: 0.6 }}
             className="mt-10 max-w-xl text-lg font-medium leading-relaxed text-[var(--color-text-secondary)]"
           >
@@ -177,11 +189,11 @@ function Hero() {
 
           <motion.div
             initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
+            animate={shouldAnimate ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={{ delay: 0.65, duration: 0.5 }}
             className="mt-10 flex flex-col items-start gap-5 sm:flex-row sm:items-center"
           >
-            <MagneticButton            
+            <MagneticButton
               as="a"
               href="#contact"
               className="group flex items-center justify-center gap-3 rounded-[var(--radius-pill)] bg-[var(--color-accent-violet)] px-9 py-4 text-sm font-bold uppercase tracking-widest text-white shadow-[var(--shadow-sm)] transition-colors duration-300 hover:bg-[var(--color-accent-violet-hover)]"

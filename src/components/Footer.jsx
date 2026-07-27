@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { memo } from "react";
 import { ArrowUpRight, ChevronUp, Mail } from "lucide-react";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { fadeUp, staggerContainer, VIEWPORT_ONCE } from "../lib/motion";
@@ -35,7 +36,7 @@ const TECH_STACK_LIST = [
   "Supabase",
 ];
 
-function Footer() {
+const Footer = memo(function Footer() {
   const handleBackToTop = (event) => {
     event.preventDefault();
     const prefersReducedMotion = window.matchMedia(
@@ -260,6 +261,6 @@ function Footer() {
       </div>
     </footer>
   );
-}
+});
 
 export default Footer;

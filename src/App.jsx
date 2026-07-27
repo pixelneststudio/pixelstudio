@@ -2,21 +2,7 @@ import { useState, useCallback, useEffect, lazy, Suspense } from "react";
 
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
-import Services from "./components/Services";
-import BusinessAutomation from "./components/BusinessAutomation";
-import Projects from "./components/Projects";
-import Industries from "./components/Industries";
-import ProjectInvestment from "./components/ProjectInvestment";
-import WhyChoosePixelNest from "./components/WhyChoosePixelNest";
-import Results from "./components/Results";
-import TrustSection from "./components/TrustSection";
-import TechStack from "./components/TechStack";
-import Contact from "./components/Contact";
 import Footer from "./components/Footer";
-import ProblemSection from "./components/ProblemSection";
-import Process from "./components/Process";
-import FAQ from "./components/FAQ";
-import CTASection from "./components/CTASection";
 import Loader from "./components/Loader";
 import ScrollProgress from "./components/ScrollProgress";
 import SmoothScroll from "./components/SmoothScroll";
@@ -25,6 +11,21 @@ import FloatingCTA from "./components/ui/FloatingCTA";
 import PrivacyPolicy from "./Pages/PrivacyPolicy";
 import TermsOfService from "./Pages/TermsOfService";
 
+// Lazy load all sections below Hero (except Footer which is used in legal pages)
+const ProblemSection = lazy(() => import("./components/ProblemSection"));
+const Services = lazy(() => import("./components/Services"));
+const BusinessAutomation = lazy(() => import("./components/BusinessAutomation"));
+const Process = lazy(() => import("./components/Process"));
+const Projects = lazy(() => import("./components/Projects"));
+const Industries = lazy(() => import("./components/Industries"));
+const ProjectInvestment = lazy(() => import("./components/ProjectInvestment"));
+const WhyChoosePixelNest = lazy(() => import("./components/WhyChoosePixelNest"));
+const Results = lazy(() => import("./components/Results"));
+const TechStack = lazy(() => import("./components/TechStack"));
+const TrustSection = lazy(() => import("./components/TrustSection"));
+const FAQ = lazy(() => import("./components/FAQ"));
+const CTASection = lazy(() => import("./components/CTASection"));
+const Contact = lazy(() => import("./components/Contact"));
 const DemoOverlay = lazy(() => import("./components/DemoOverlay"));
 
 function HomePage() {
@@ -34,7 +35,7 @@ function HomePage() {
   useEffect(() => {
     const timer = setTimeout(() => {
       setLoading(false);
-    }, 2500);
+    }, 800);
 
     return () => clearTimeout(timer);
   }, []);
@@ -65,20 +66,22 @@ function HomePage() {
 
           <main>
             <Hero />
-            <ProblemSection />
-            <Services />
-            <BusinessAutomation />
-            <Process />
-            <Projects onOpenDemo={openDemo} />
-            <Industries />
-            <ProjectInvestment />
-            <WhyChoosePixelNest />
-            <Results />
-            <TechStack />
-            <TrustSection />
-            <FAQ />
-            <CTASection />
-            <Contact />
+            <Suspense fallback={null}>
+              <ProblemSection />
+              <Services />
+              <BusinessAutomation />
+              <Process />
+              <Projects onOpenDemo={openDemo} />
+              <Industries />
+              <ProjectInvestment />
+              <WhyChoosePixelNest />
+              <Results />
+              <TechStack />
+              <TrustSection />
+              <FAQ />
+              <CTASection />
+              <Contact />
+            </Suspense>
           </main>
 
           <Footer />
